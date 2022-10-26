@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header">
+</head>
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <div th:replace="navigation_bar"></div>
+    <h2>New Account</h2>
+    <div class="col-md-auto">
+        <form th:object="${account}" th:action="@{save}" action="#" method="post">
+            <div>
+                <label th:text="Number" th:for="number"></label>
+                <input type="text" th:field="*{number}" class="form-control" placeholder="Number"/>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+            <div>
+               <label th:for="bank_name">Bank Name</label>
+               <select class="form-control" id="sel1" th:field="*{bankId}">
+                         <option th:each="bank : ${banks}" th:text="${bank.getName}" th:value="${bank.getId}" ></option>
+               </select>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+            <div>
+                <label th:for="customer_id">Customer ID</label>
+                <select class="form-control" th:field="*{customerId}">
+                    <option th:each="customer : ${customers}" th:text="${customer.getId}" th:value="${customer.getId}" ></option>
+                </select>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+            <div>
+                <label  th:for="balance">Balance</label>
+                <input type="text" th:field="*{balance}" class="form-control" placeholder="Balance"/>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+            <input type="submit" class="btn btn-success" value="Save"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

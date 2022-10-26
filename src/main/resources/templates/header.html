@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <title>Bank System</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .data-table-tr {
+            cursor: pointer;
+        }
+        .col-form-left {
+            font-weight: bold;
+        }
+        .nav-link {
+            font-size: 1.2rem;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            let pathname = window.location.pathname;
+            let isAccount = pathname.includes("account");
+            let isBank = pathname.includes("bank");
+            let isCustomer = pathname.includes("customer");
+            if (isAccount) {
+                $("#nav-account").addClass("active")
+            }
+            if (isBank) {
+                $("#nav-bank").addClass("active")
+            }
+            if (isCustomer) {
+                $("#nav-customer").addClass("active")
+            }
+        })
+    </script>
+</head>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head th:replace="header">
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <div th:replace="navigation_bar"></div>
+    <h2>Customer List</h2>
+    <div th:if="${errorMessage}">
+        <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+    </div>
+    <div class="mb-2 ml-3"><span th:text="${customers.size()}"></span> customer(s)</div>
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Full name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.getId}"></td>
+            <td th:text="${customer.getFullName}"></td>
+            <td th:text="${customer.getPhoneNumber}"></td>
+            <td th:text="${customer.getEmail}"></td>
+            <td th:text="${customer.getAddress}"></td>
+            <td>
+                <a th:href="@{customer/edit?id={id}(id=${customer.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/customer/delete?id={id}(id=${customer.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/customer/add" class="btn btn-success">Add Customer</a>
+</div>
+</body>
+</html>

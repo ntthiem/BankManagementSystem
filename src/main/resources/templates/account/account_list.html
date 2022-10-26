@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header">
+</head>
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <div th:replace="navigation_bar"></div>
+    <div class="d-flex">
+        <div class="col-sm-6" style="padding: 0px !important;"><h2>Account List</h2></div>
+        <form class="col-sm-6" action="/account/search" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" name="number" th:value="${number}" placeholder="Search by number" id="txtSearch"/>
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="submit">Go</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="mb-2 ml-3"><span th:text="${accounts.size()}"></span> account(s)</div>
+    <table class= "table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Number</th>
+            <th>Bank name</th>
+            <th>Customer ID</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+        <tr class="data-table-tr" th:each="account : ${accounts}" th:data-url="@{/account/detail?id={id}(id=${account.getId})}">
+            <td th:text="${account.getId}"></td>
+            <td th:text="${account.getNumber}"></td>
+            <td th:text="${account.getBank.getName()}"></td>
+            <td th:text="${account.getCustomer.getId}"></td>
+            <td th:text="${#numbers.formatCurrency(account.getBalance)}"></td>
+            <td>
+                <a th:href="@{/account/edit?id={id}(id=${account.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/account/delete?id={id}(id=${account.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/account/add" class="btn btn-success">Add Account</a>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $(".data-table-tr").click(function () {
+            let url = $(this).attr('data-url')
+            if (url) {
+                window.location = url
+            }
+        })
+    })
+</script>
+</html>

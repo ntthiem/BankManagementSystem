@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head th:replace="header">
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <div th:replace="navigation_bar"></div>
+    <h2>Bank List</h2>
+    <div th:if="${errorMessage}">
+        <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+    </div>
+    <div class="mb-2 ml-3"><span th:text="${banks.size()}"></span> bank(s)</div>
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="bank : ${banks}">
+            <td th:text="${bank.getId}"></td>
+            <td th:text="${bank.getName}"></td>
+            <td th:text="${bank.getAddress}"></td>
+            <td>
+                <a th:href="@{bank/edit?id={id}(id=${bank.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/bank/delete?id={id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/bank/add" class="btn btn-success">Add bank</a>
+</div>
+</body>
+</html>

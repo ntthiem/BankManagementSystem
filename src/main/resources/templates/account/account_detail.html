@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header">
+</head>
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <div th:replace="navigation_bar"></div>
+    <h2>Account detail</h2>
+    <div th:if="${errorMessage}">
+        <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+    </div>
+    <table class="table" aria-label="table">
+        <tbody>
+        <tr>
+            <td class="col-form-left">Number</td>
+            <td th:text="${account.getNumber}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Balance</td>
+            <td th:text="${#numbers.formatCurrency(account.getBalance)}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Bank Name</td>
+            <td th:text="${account.getBank.getName}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Bank Address</td>
+            <td th:text="${account.getBank.getAddress}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Customer Name</td>
+            <td th:text="${account.getCustomer.getFullName}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Customer Email</td>
+            <td th:text="${account.getCustomer.getEmail}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Customer Phone Number</td>
+            <td th:text="${account.getCustomer.getPhoneNumber}"></td>
+        </tr>
+        <tr>
+            <td class="col-form-left">Customer Address</td>
+            <td th:text="${account.getCustomer.getAddress}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <button type="button"  data-toggle="modal" data-target="#depositModal" class="btn btn-primary">Deposit</button>
+        <button type="button"data-toggle="modal" data-target="#withdrawModal" class="btn btn-success">Withdraw</button>
+    </div>
+
+    <!-- Deposit Modal  -->
+    <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="depositModalLabel">Deposit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  action="/account/deposit" method="post" id="deposit-form">
+                        <input th:value="${account.getId}" type="hidden" name="accountId" class="form-control"/>
+                        <div class="form-group">
+                            <input type="text" name="deposit" class="form-control" id="usr">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="deposit-submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal  -->
+    <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="withdrawModalLabel">Withdraw</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  action="/account/withdraw" method="post" id="withdraw-form">
+                        <input th:value="${account.getId}" type="hidden" name="accountId" class="form-control"/>
+                        <div class="form-group">
+                            <input type="text" name="withdraw" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="withdraw-submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $( "#deposit-submit" ).click(function() {
+            $( "#deposit-form" ).submit();
+        });
+        $( "#withdraw-submit" ).click(function() {
+            $( "#withdraw-form" ).submit();
+        });
+    });
+</script>
+</html>
